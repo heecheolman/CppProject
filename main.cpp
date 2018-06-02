@@ -12,7 +12,8 @@
 #include <string>
 #include <cstdlib>
 #include <ctime>
-
+#include <iomanip>
+// ─ │ ┌ ┐ ┘ └ ├ ┬ ┤ ┴ ┼
 using namespace std;
 
 typedef struct Item {
@@ -31,15 +32,10 @@ typedef struct ItemList {
     int numOfData;
 } ItemList;
 
-typedef struct SalesStatus {
-    
-} SalesStatus;
-
 typedef struct Admin {
     string ID;
     string PW;
     int money;
-    
 } Admin;
 
 typedef struct VendingMachine {
@@ -48,31 +44,90 @@ typedef struct VendingMachine {
 } VendingMachine;
 
 /* Message */
+void ClearScreen() {
+    cout << string( 100, '\n' );
+}
+void PrintSetAdminMessage() {
+    cout << "┌────────────────────────┐" << endl;
+    
+    cout.width(7);
+    cout.fill(' ');
+    cout << left << "│";
+    
+    cout.width(18);
+    cout.fill(' ');
+    cout << left << "SET ADMIN ACCOUNT";
+    
+    cout.width(5);
+    cout.fill(' ');
+    cout << right << "│" << endl;
+    
+    cout << "└────────────────────────┘" << endl;
+}
 int SelectMainMenu() {
     int select;
-    cout << "1. 관리자 정보변경" << endl;
-    cout << "2. 상품 추가하기" << endl;
-    cout << "3. 상품 삭제하기" << endl;
-    cout << "4. 상품 수정하기" << endl;
-    cout << "5. 상품 전체보기" << endl;
-    cout << "6. 상품 검색" << endl;
-    cout << "7. 매출현황 보기" << endl;
-    cout << "8. 판매 개시" << endl;
+    // ─ │ ┌ ┐ ┘ └ ├ ┬ ┤ ┴ ┼
+    cout << "┌────────────────────────┐" << endl;
+    cout << "│     VENDING MACHINE    │" << endl;
+    cout << "├────────────────────────┘" << endl;
+    cout << "|" << endl;
+    cout << "├──[ 1 ]  관리자 정보변경" << endl;
+    cout << "|" << endl;
+    cout << "├──[ 2 ]  상품 추가" << endl;
+    cout << "|" << endl;
+    cout << "├──[ 3 ]. 상품 삭제" << endl;
+    cout << "|" << endl;
+    cout << "├──[ 4 ]. 상품 수정" << endl;
+    cout << "|" << endl;
+    cout << "├──[ 5 ]. 상품 전체보기" << endl;
+    cout << "|" << endl;
+    cout << "├──[ 6 ]. 상품 검색" << endl;
+    cout << "|" << endl;
+    cout << "├──[ 7 ]. 매출현황 보기" << endl;
+    cout << "|" << endl;
+    cout << "├──[ 8 ]. 판매 개시" << endl;
+    cout << "|" << endl;
+    cout << "├──[ 9 ]. 종료" << endl;
+    cout << "└────────────────────────┘" << endl;
     cin >> select;
     return select;
 }
 
 int SelectAdminMenu() {
     int select;
-    cout << "1. 관리자 아이디 변경" << endl;
-    cout << "2. 관리자 비밀번호 변경" <<  endl;
+    cout << "┌────────────────────────┐" << endl;
+    cout << "│     VENDING MACHINE    │" << endl;
+    cout << "├────────────────────────┘" << endl;
+    cout << "|" << endl;
+    cout << "├──[ 1 ]  관리자 아이디 변경" << endl;
+    cout << "|" << endl;
+    cout << "├──[ 2 ]  관리자 비밀번호 변경" << endl;
+    cout << "└────────────────────────┘" << endl;
     cin >> select;
     return select;
 }
 
 string input(string message) {
     string data;
-    cout << message << "를 입력하세요 >> ";
+    cout << "┌────────────────────────┐" << endl;
+    
+    cout.width(1);
+    cout << left << "|";
+    
+    cout.width(8);
+    cout.fill(' ');
+    cout << right << "input";
+    
+    cout.width(12);
+    cout.fill(' ');
+    cout << right << message;
+    
+    cout.width(7);
+    cout.fill(' ');
+    cout << right << "│" << endl;
+    
+    cout << "└┬───────────────────────┘" << endl;
+    cout << " └───>>   ";
     cin >> data;
     return data;
 }
@@ -80,11 +135,15 @@ string input(string message) {
 bool CheckAdminInfo(string adminPW) {
     bool isSame = false;
     string tempPW;
-    cout << "정보를 변경합니다. 비밀번호를 입력해주세요 >> ";
+    cout <<  endl;
+    cout << "──── *    정보를 변경합니다   * ────" << endl;
+    cout << "──── *  비밀번호를 입력해주세요 * ─────>>   ";
     cin >> tempPW;
+    cout <<  endl;
     isSame = (adminPW == tempPW) ? true : false;
     if(!isSame) {
-        cout << "비밀번호가 일치하지않습니다" << endl;
+        cout << "****** ! 비밀번호가 일치하지 않습니다 ! *****" << endl;
+        cout << "****** !       되돌아갑니다       ! *****" << endl;
     }
     return isSame;
 }
@@ -93,20 +152,46 @@ void ChangeInfo(string message, string * adminInfo) {
     string tempInfo;
     string YorN;
     bool hasDone = false;
-    cout << message << " 를 변경합니다" << endl;
+    cout << "┌────────────────────────┐" << endl;
+    
+    cout.width(1);
+    cout << left << "|";
+    
+    cout.width(8);
+    cout.fill(' ');
+    cout << right << "input";
+    
+    cout.width(12);
+    cout.fill(' ');
+    cout << right << message;
+    
+    cout.width(7);
+    cout.fill(' ');
+    cout << right << "│" << endl;
+    
+    cout << "└┬───────────────────────┘" << endl;
     
     while(!hasDone) {
-        cout << "변경하실 " << message << "를 입력해주세요 >> ";
+        cout << " ├─── 변경하실 " << message << "를 입력해주세요" << endl;
+        cout << " └───>>  ";
         cin >>  tempInfo;
-        cout << "입력하신 정보가 " << tempInfo << "가 맞습니까? ( Y / N ) >> " << endl;
+        cout << " ├─── 입력하신 정보가 " << tempInfo << "가 맞습니까 ? ( Y or N )" << endl;
+//        cout << " └───>>  입력하신 정보가 " << tempInfo << "가 맞습니까 ? ( Y or N )" << endl;
+//        cout << "입력하신 정보가 " << tempInfo << "가 맞습니까? ( Y / N ) >> " << endl;
+        cout << " └───>>  ";
         cin >> YorN;
         if(YorN == "Y" || YorN == "y") {
             hasDone = true;
             *adminInfo = tempInfo;
-            cout << "변경되었습니다" << endl;
-            cout << "재로그인합니다" << endl;
+            cout <<  endl;
+            cout << "──── *    변경되었습니다   * ────" << endl;
+            cout << "──── *    재로그인합니다   * ────" << endl;
+            cout <<  endl;
         }else {
-            cout << "변경되지않았습니다" << endl;
+            cout <<  endl;
+            cout << "****** !    변경되지 않았습니다     ! *****" << endl;
+            cout << "****** !       되돌아갑니다       ! *****" << endl;
+            cout <<  endl;
         }
     }
 }
@@ -115,17 +200,39 @@ void NoMenu() {
     cout << "없는 메뉴입니다" << endl;
 }
 
+bool YesOrNo(string message) {
+    string YorN;
+    bool yes = true;
+    cout << message << " 하시겠습니까? ( Y or N )";
+    cin >> YorN;
+    yes = (YorN == "y" || YorN == "Y") ? true : false;
+    return yes;
+}
+
 /***********/
 
 /* System Function */
 bool Loginning(string &adminID, string &adminPW) {
     string inputID;
     string inputPW;
-    cout << "로그인합니다" << endl;
-    cout << "아이디를 입력해주세요 >> ";
-    cin >> inputID;
-    cout << "패스워드를 입력해주세요 >> ";
-    cin >> inputPW;
+    cout << "┌────────────────────────┐" << endl;
+    
+    cout.width(13);
+    cout.fill(' ');
+    cout << left << "│";
+    
+    cout.width(14);
+    cout.fill(' ');
+    cout << left << "LOGIN";
+    
+    cout.width(1);
+    cout.fill(' ');
+    cout << right << "│" << endl;
+    
+    cout << "└────────────────────────┘" << endl;
+    inputID = input("ID");
+    inputPW = input("PASSWORD");
+    ClearScreen();
     return (inputID == adminID && inputPW == adminPW) ? true : false;
 }
 
@@ -141,7 +248,7 @@ void ILInit(ItemList * list) {
 
 void ILInsert(ItemList * list) {
     if(list->numOfData == ITEMLIST_MAX) {
-        cout << "더 이상 추가 할 수 없습니다" << endl;
+        cout << "****** !    더 이상 추가할 수 없습니다     ! *****" << endl;
         return;
     }
     Item * newItem = new Item;
@@ -149,10 +256,18 @@ void ILInsert(ItemList * list) {
     newItem->left = list->tail->left;
     list->tail->left->right = newItem;
     list->tail->left = newItem;
-    cout << "아이템 이름 설정 >> ";
+    cout << "─┬── *    아이템 이름 설정   * ────" << endl;
+    cout << " │" << endl;
+    cout << " ├───>>  ";
     cin >> newItem->itemName;
-    cout << "아이템 가격 설정 >> ";
+//    cout << "아이템 이름 설정 >> ";
+    
+    cout << " │" << endl;
+    cout << " ├── *    아이템 가격 설정   * ────" << endl;
+    cout << " │" << endl;
+    cout << " └───>>  ";
     cin >> newItem->itemPrice;
+//    cout << "아이템 가격 설정 >> ";
     newItem->itemCount = ITEM_MAX;
     newItem->isSoldOut = false;
     (list->numOfData)++;
@@ -160,7 +275,7 @@ void ILInsert(ItemList * list) {
 
 bool ILFirst(ItemList * list, Item * tempItem) {
     if(list->numOfData == 0) {
-        cout << "저장된 데이터가 없습니다" << endl;
+        cout << "****** !    저장된 데이터가 없습니다     ! *****" << endl;
         return false;
     }
     list->cur = list->head->right;
@@ -173,7 +288,7 @@ bool ILFirst(ItemList * list, Item * tempItem) {
 
 bool ILNext(ItemList * list, Item * tempItem) {
     if(list->numOfData == 0) {
-        cout << "저장된 데이터가 없습니다" << endl;
+        cout << "****** !    저장된 데이터가 없습니다     ! *****" << endl;
         return false;
     }
     list->cur = list->cur->right;
@@ -188,17 +303,22 @@ bool ILNext(ItemList * list, Item * tempItem) {
 }
 
 bool ILRemove(ItemList * list, Item * target) {
-    target->left->right = target->right;
-    target->right->left = target->left;
-    free(target);
-    (list->numOfData)--;
-    
-    cout << "제거된 항목 : " << target->itemName << endl;
-    cout << "제거된 항목 : " << target->itemPrice << endl;
-    cout << "제거된 항목 : " << target->itemCount << endl;
-    cout << "제거된 항목 : " << target->isSoldOut << endl;
-    cout << list->numOfData << endl;
-    return true;
+    bool willRemove = false;
+    willRemove = YesOrNo("제거");
+    if(willRemove){
+        target->left->right = target->right;
+        target->right->left = target->left;
+        free(target);
+        (list->numOfData)--;
+        cout << "제거된 항목 : " << target->itemName << endl;
+        cout << "제거된 항목 : " << target->itemPrice << endl;
+        cout << "제거된 항목 : " << target->itemCount << endl;
+        cout << "제거된 항목 : " << target->isSoldOut << endl;
+        cout << list->numOfData << endl;
+    }else {
+        cout << "****** !    취소했습니다.     ! *****" << endl;
+    }
+    return willRemove;
 }
 
 Item *ILFind(ItemList * list, string targetName) {
@@ -213,14 +333,7 @@ Item *ILFind(ItemList * list, string targetName) {
     }
     return NULL;
 }
-bool YesOrNo() {
-    string YorN;
-    bool yes = true;
-    cout << "변경하시겠습니까 ? ( Y or N )";
-    cin >> YorN;
-    yes = (YorN == "y" || YorN == "Y") ? true : false;
-    return yes;
-}
+
 void EditItemInfo(Item * target) {
     bool hasEdit = false;
     string inputName;
@@ -235,7 +348,7 @@ void EditItemInfo(Item * target) {
         case 1:
             cout << "변경될 아이템 이름 입력 >> ";
             cin >> inputName;
-            hasEdit = YesOrNo();
+            hasEdit = YesOrNo("변경");
             if(hasEdit) {
                 target->itemName = inputName;
             }
@@ -243,7 +356,7 @@ void EditItemInfo(Item * target) {
         case 2:
             cout << "변경될 아이템 가격 입력 >> ";
             cin >> inputPrice;
-            hasEdit = YesOrNo();
+            hasEdit = YesOrNo("변경");
             if(hasEdit) {
                 target->itemPrice = inputPrice;
             }
@@ -253,20 +366,21 @@ void EditItemInfo(Item * target) {
             hasEdit = false;
             break;
     }
-    hasEdit ? printf("변경되었습니다\n") : printf("변경되지 않았습니다\n");
+    hasEdit ? printf("변경되었습니다\n") : printf("****** !    변경되지 않았습니다     ! *****\n");
 }
 
-void ShowItemInfo(Item * target) {
+bool ShowItemInfo(Item * target) {
     cout << "아이템 이름 : " << target->itemName << endl;
     cout << "아이템 가격 : " << target->itemPrice << endl;
     cout << "아이템 개수 : " << target->itemCount << endl;
+    return true;
 }
 
 void ShowAllItem(ItemList * list) {
     Item * target;
     target = list->head->right;
     if(target == list->tail) {
-        cout << "저장된 데이터가 없습니다" << endl;
+        cout << "****** !    저장된 데이터가 없습니다     ! *****" <<  endl;
         return;
     }
     while(target != list->tail) {
@@ -288,10 +402,38 @@ void Selling(ItemList * list) {
     Item * target;
     target = list->head->right;
     while(target != list->tail) {
-        target->itemCount = (rand() % (target->itemCount)) + 1;
+        target->itemCount = (rand() % (target->itemCount));
         target = target->right;
     }
 }
+
+void ShowSalesGraph(ItemList * list) {
+    Item * target;
+    string dash;
+    int sellingCount = 0;
+    int revenue = 0;
+    
+    target = list->head->right;
+    if(target == list->tail) {
+        cout << "****** !    자판기에 품목이 없습니다     ! *****" << endl;
+        return;
+    }
+    while(target != list->tail) {
+        dash = "";
+        sellingCount = ITEM_MAX - target->itemCount;
+        revenue += sellingCount * target->itemPrice;
+        for(int i = 0; i < sellingCount; i++) {
+            dash += "-";
+        }
+        cout << target->itemName << "(" << sellingCount << ") | " << dash << endl;
+        target = target->right;
+    }
+    cout << "매출액 : " << revenue << endl;
+    // dash 의 개수가 sellingCount 만큼 나와야함
+    // 어떻게 할래?
+}
+
+
 
 /*************/
 
@@ -313,11 +455,12 @@ int main() {
     string itemName;
     
     // Set ID and Password
-    vm->admin->ID = input("아이디");
-    vm->admin->PW = input("패스워드");
-    
+    PrintSetAdminMessage();
+    vm->admin->ID = input("ID");
+    vm->admin->PW = input("PASSWORD");
+    ClearScreen();
     while(selectedMenu != 9) {
-        // Login
+        
         if(!hasLogin) hasLogin = Loginning(vm->admin->ID, vm->admin->PW);
         if(hasLogin) {
             selectedMenu = SelectMainMenu();
@@ -327,11 +470,11 @@ int main() {
                         selectedMenu = SelectAdminMenu();
                         switch(selectedMenu) {
                             case 1: // 아이디변경
-                                ChangeInfo("아이디", &vm->admin->ID);
+                                ChangeInfo("ID", &vm->admin->ID);
                                 hasLogin = !hasLogin;
                                 break;
                             case 2: // 비밀번호변경
-                                ChangeInfo("비밀번호", &vm->admin->PW);
+                                ChangeInfo("PASSWORD", &vm->admin->PW);
                                 hasLogin = !hasLogin;
                                 break;
                             default:
@@ -345,7 +488,7 @@ int main() {
                 case 3: // 상품제거
                     itemName = inputServieceMessage();
                     pData = ILFind(vm->list, itemName);
-                    pData ? ILRemove(vm->list, pData) : printf("제거할 대상을 찾지 못했습니다.\n");
+                    pData ? ILRemove(vm->list, pData) : printf("****** !    제거할 대상을 찾지 못했습니다     ! *****\n");
                     break;
                 case 4: // 상품수정
                     itemName = inputServieceMessage();
@@ -358,9 +501,10 @@ int main() {
                 case 6: // 상품검색
                     itemName = inputServieceMessage();
                     pData = ILFind(vm->list, itemName);
-                    ShowItemInfo(pData);
+                    pData ? ShowItemInfo(pData) : printf("****** !    해당 품목을 찾지 못했습니다     ! *****\n");
                     break;
                 case 7: // 매출현황
+                    ShowSalesGraph(vm->list);
                     break;
                 case 8: // 판매개시
                     Selling(vm->list);
@@ -403,7 +547,18 @@ int main() {
  이상찬 (1) | ㅡ
  김기림 (0) | -
  
+ ─ │ ┌ ┐ ┘ └ ├ ┬ ┤ ┴ ┼
+ 
+ ┌───────────────────┐
+ │
+ └┬──────────────────┘
+  └───>>
+ ┌─────────┐
+ │  input  ├───>
+ └─────────┘
  
  
+ 
+ ├── 입력해주세요 ──┤
 */
 
