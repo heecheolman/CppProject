@@ -8,7 +8,7 @@
 
 #pragma once
 
-#define ITEMLIST_MAX 5
+#define ITEMLIST_MAX 10
 #define ITEM_MAX 10
 using namespace std;
 

@@ -62,7 +62,9 @@ int SelectMainMenu() {
     cout << "|" << endl;
     cout << "├──[ 8 ]  판매 개시" << endl;
     cout << "|" << endl;
-    cout << "├──[ 9 ]  종료" << endl;
+    cout << "├──[ 9 ]  매출 정산" << endl;
+    cout << "|" << endl;
+    cout << "├──[ 10 ]  종료" << endl;
     cout << "|" << endl;
     cout << "└────────────────────────┘" << endl;
     cin >> select;
