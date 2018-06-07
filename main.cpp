@@ -22,6 +22,7 @@ int main() {
     // 자판기 내 리스트 초기화
     ILInit(vm->list);
     
+    
     // 출력값 확인을 위한 임시 data;
     Item * pData;
     Item data;
@@ -50,7 +51,7 @@ int main() {
     PressAnyKey(false);
     
     ClearScreen();
-    while(selectedMenu != 9) {
+    while(selectedMenu != 10) {
         ClearScreen();
         if(!hasLogin) hasLogin = Loginning(vm->admin->ID, vm->admin->PW);
         if(hasLogin) {
@@ -113,6 +114,11 @@ int main() {
                         cout << "****** !    등록된 상품이 없습니다     ! *****" << endl;
                         PressAnyKey(false);
                     }
+                    break;
+                case 9:
+                    if(vm->list->numOfData != 0) RevenueSettled(vm->list);
+                    else cout << "****** !    등록된 상품이 없습니다     ! *****" << endl;
+                    PressAnyKey(false);
                     break;
             }
         }

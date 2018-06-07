@@ -23,3 +23,4 @@ void ChangeInfo(string message, string * adminInfo);
 bool CheckAdminInfo(string adminPW);
 void ReturnMenu();
 bool Loginning(string &adminID, string &adminPW);
+void RevenueSettled(ItemList * list);

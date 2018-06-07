@@ -163,18 +163,19 @@ void ShowSalesGraph(ItemList * list) {
 
 bool IsSoldOut(ItemList * list) {
     bool isSoldOut = false;
-    Item * target;
-    target = list->head->right;
+    int soldOutItemCount = 0;
+    Item * target = list->head->right;
+    
     while(target != list->tail) {
         if(target->itemCount == 0) {
-            isSoldOut = true;
-            break;
+            // 하나라도 개수가 존재한다면 false
+            soldOutItemCount++;
         }
         target = target->right;
     }
-    if(isSoldOut) {
-        cout << "****** !    품절인 항목이 있습니다     ! *****" << endl;
-    }
+    isSoldOut = soldOutItemCount == list->numOfData ? true : false;
+    if(isSoldOut) cout << "****** !    전체 품절입니다.     ! *****" << endl;
+    PressAnyKey(false);
     return isSoldOut;
 }
 
@@ -300,4 +301,19 @@ bool Loginning(string &adminID, string &adminPW) {
     inputPW = Input("PASSWORD");
     ClearScreen();
     return (inputID == adminID && inputPW == adminPW) ? true : false;
+}
+
+void RevenueSettled(ItemList * list) {
+    Item * iterator = list->head->right;
+    Item * target = list->head->right;
+    
+    while(iterator != list->tail) {
+        target = iterator;
+        target->left->right = target->right;
+        target->right->left = target->left;
+        free(target);
+        iterator = iterator->right;
+    }
+    list->numOfData = 0;
+    cout << "──── *    정산되었습니다.   * ────" << endl;
 }
