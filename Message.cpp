@@ -11,6 +11,7 @@ void ClearScreen() {
     cout << string( 100, '\n' );
 }
 
+
 void SetAccountMessage() {
     cout << endl;
     cout << "──── *    계정이 설정되었습니다   * ────" << endl;
