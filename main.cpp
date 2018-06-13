@@ -16,6 +16,7 @@
 using namespace std;
 
 int main() {
+    
     VendingMachine *vm = new VendingMachine;
     vm->admin = new Admin;
     vm->list = new ItemList;

@@ -16,5 +16,5 @@ void ILInit(ItemList * list);
 void ILInsert(ItemList * list);
 bool ILFirst(ItemList * list, Item * tempItem);
 bool ILNext(ItemList * list, Item * tempItem);
-bool ILRemove(ItemList * list, Item * target);
+bool ILRemove(ItemList * list, Item *ㅑtarget);
 Item *ILFind(ItemList * list, string targetName);
